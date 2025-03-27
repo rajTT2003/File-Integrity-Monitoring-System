@@ -1,0 +1,172 @@
+/* fileView.css */
+
+/* General styles for file explorer */
+.file-view-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Header section */
+.header {
+    background-color: #0078d4;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header .back {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.header .breadcrumbs {
+    flex-grow: 1;
+    margin-left: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #fff;
+}
+
+.header .view-toggle, .header .new-file-btn, .header .new-folder-btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.header .view-toggle:hover, .header .new-file-btn:hover, .header .new-folder-btn:hover {
+    background-color: #e6b800;
+}
+
+/* Main section: Sidebar + File container */
+.main-section {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 20px;
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 220px;
+    background-color: #e1e1e1;
+    padding: 15px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar-item {
+    padding: 12px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: #0078d4;
+    color: white;
+}
+
+/* File container styles */
+.file-container {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    overflow-y: auto; /* Allow scrolling if necessary */
+}
+
+.file-container .item {
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.file-container .item:hover {
+    background-color: #e7f3ff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.file-container .item .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.file-container .item .filename {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.file-container .item .actions {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.file-container .item .actions .edit-btn,
+.file-container .item .actions .delete-btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-right: 5px;
+}
+
+.file-container .item .actions .edit-btn:hover,
+.file-container .item .actions .delete-btn:hover {
+    background-color: #e6b800;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-section {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .file-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+#fileContainer{
+    max-height: 30vh 
+}

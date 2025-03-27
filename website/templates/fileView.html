@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %} SafeBank - File View {% endblock %}
+
+{% block content %}
+<div class="file-view-container">
+  <!-- File Explorer Header -->
+  <div class="header">
+    <div class="back" id="backButton">&#8592; Back</div>
+    <div class="breadcrumbs" id="breadcrumbs"></div>
+    <button class="view-toggle" id="toggleViewBtn">Switch to Grid View</button>
+    <button class="new-file-btn" id="newFileBtn">New File</button>
+    <button class="new-folder-btn" id="newFolderBtn">New Folder</button>
+  </div>
+
+  <!-- File Explorer Main Section -->
+  <div class="main-section">
+    <!-- Sidebar: Dynamic Folder Tree -->
+    <div class="sidebar">
+      <div class="tree-view" id="folderTree"></div>
+    </div>
+
+    <!-- File Display Container -->
+    <div class="file-container" id="fileContainer"></div>
+  </div>
+</div>
+
+<script>
+  let currentPath = "";
+  let viewMode = "large"; 
+
+  document.getElementById("toggleViewBtn").addEventListener("click", () => {
+    viewMode = viewMode === "large" ? "large" : "large";
+    document.getElementById("toggleViewBtn").innerText = viewMode === "large" ? "Switch to Grid View" : "Switch to Grid View";
+    fetchFolder(currentPath);
+  });
+
+  document.getElementById("newFileBtn").addEventListener("click", () => {
+    let fileName = prompt("Enter new file name:");
+    if (fileName) createFile(fileName);
+  });
+
+  document.getElementById("newFolderBtn").addEventListener("click", () => {
+    let folderName = prompt("Enter new folder name:");
+    if (folderName) createFolder(folderName);
+  });
+
+  async function getRootFolder() {
+    try {
+      let response = await fetch("/api/root");
+      let data = await response.json();
+      currentPath = data.root || "/Monitor";
+      fetchFolder(currentPath);
+      fetchFolderTree();
+    } catch (error) {
+      console.error("Error fetching root folder:", error);
+      alert("Failed to load the root folder.");
+    }
+  }
+
+  async function fetchFolderTree() {
+    try {
+      let response = await fetch("/api/tree");
+      let treeData = await response.json();
+      renderTree(treeData, document.getElementById("folderTree"));
+    } catch (error) {
+      console.error("Error fetching folder tree:", error);
+    }
+  }
+
+  function renderTree(data, parentElement) {
+    let ul = document.createElement("ul");
+
+    data.forEach(folder => {
+      let li = document.createElement("li");
+      li.innerHTML = `<span class="folder-label"><img style="width:20px" src="/static/icons/folder.png" alt="folder" class="folder-icon"> ${folder.name}</span>`;
+      
+      li.addEventListener("click", (event) => {
+        event.stopPropagation();
+        fetchFolder(folder.path);
+      });
+
+      if (folder.children && folder.children.length > 0) {
+        renderTree(folder.children, li);
+      }
+
+      ul.appendChild(li);
+    });
+
+    parentElement.appendChild(ul);
+  }
+
+  function updateBreadcrumbs() {
+    let parts = currentPath.split("/").filter(p => p);
+    let breadcrumbHTML = parts.map((part, index) => {
+      let path = "/" + parts.slice(0, index + 1).join("/");
+      return `<a href="#" onclick="fetchFolder('${path}')">${part}</a>`;
+    }).join(" / ");
+    document.getElementById("breadcrumbs").innerHTML = breadcrumbHTML;
+  }
+
+  function fetchFolder(path) {
+    currentPath = path;
+    updateBreadcrumbs();
+
+    fetch(`/api/list?path=${encodeURIComponent(path)}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.error) {
+              alert(data.error);
+              return;
+          }
+          displayItems(data.files);
+      })
+      .catch(err => {
+          console.error("Error fetching folder contents:", err);
+          alert("Could not load folder contents.");
+      });
+  }
+
+  function displayItems(items) {
+    const container = document.getElementById("fileContainer");
+
+    container.innerHTML = "";
+
+    if (viewMode === "large") {
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("item", "large");
+
+        let iconPath = item.isFolder ? "/static/icons/folder.png" : "/static/icons/file.png";
+        if (!item.isFolder) {
+          let ext = item.name.split(".").pop().toLowerCase();
+          let allowedIcons = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "html", "htm"];
+          if (allowedIcons.includes(ext)) {
+            iconPath = `/static/icons/${ext}.png`;
+          }
+        }
+
+        div.innerHTML = `<div class="actions">
+                            <button class="edit-btn" onclick="editItem('${item.path}')"><img src="/static/icons/edit.png" alt="edit" style="width: 12px; vertical-align: middle;"> Edit</button>
+                            <button class="delete-btn" onclick="deleteItem('${item.path}')">Delete</button>
+                         </div>
+                         <div class="icon"><img style="width:40px" src="${iconPath}" alt="icon"></div>
+                         <div class="filename">${item.name}</div>`;
+
+        div.addEventListener("click", () => {
+          if (item.isFolder) {
+            fetchFolder(item.path);
+          } else {
+            window.open(`/api/file?path=${encodeURIComponent(item.path)}`, "_blank");
+          }
+        });
+
+        container.appendChild(div);
+      });
+    }
+  }
+
+  async function createFile(fileName) {
+    try {
+      let response = await fetch("/api/create-file", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: currentPath, name: fileName })
+      });
+      let data = await response.json();
+      if (data.success) fetchFolder(currentPath);
+      else alert("Failed to create file.");
+    } catch (error) {
+      console.error("Error creating file:", error);
+      alert("Could not create file.");
+    }
+  }
+
+  async function createFolder(folderName) {
+    try {
+      let response = await fetch("/api/create-folder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: currentPath, name: folderName })
+      });
+      let data = await response.json();
+      if (data.success) fetchFolder(currentPath);
+      else alert("Failed to create folder.");
+    } catch (error) {
+      console.error("Error creating folder:", error);
+      alert("Could not create folder.");
+    }
+  }
+
+  async function editItem(path) {
+    let newName = prompt("Enter new name:");
+    if (newName) {
+      try {
+        let response = await fetch("/api/edit-item", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path, newName })
+        });
+        let data = await response.json();
+        if (data.success) fetchFolder(currentPath);
+        else alert("Failed to rename item.");
+      } catch (error) {
+        console.error("Error renaming item:", error);
+        alert("Could not rename item.");
+      }
+    }
+  }
+
+  async function deleteItem(path) {
+    if (confirm("Are you sure you want to delete this item?")) {
+      try {
+        let response = await fetch("/api/delete-item", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path })
+        });
+        let data = await response.json();
+        if (data.success) fetchFolder(currentPath);
+        else alert("Failed to delete item.");
+      } catch (error) {
+        console.error("Error deleting item:", error);
+        alert("Could not delete item.");
+      }
+    }
+  }
+
+  window.onload = getRootFolder;
+</script>
+
+{% endblock %}
