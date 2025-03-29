@@ -104,6 +104,7 @@
     position: relative;
     border: 1px solid #ddd;
     background-color: #fff;
+    height: 24vh
 }
 
 .file-container .item:hover {
@@ -167,6 +168,3 @@
     }
 }
 
-#fileContainer{
-    max-height: 30vh 
-}

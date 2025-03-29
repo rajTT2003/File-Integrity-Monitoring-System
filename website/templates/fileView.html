@@ -28,10 +28,12 @@
 <script>
   let currentPath = "";
   let viewMode = "large"; 
+  let historyStack = []; 
+  var userRole = "{{ current_user.role }}";
 
   document.getElementById("toggleViewBtn").addEventListener("click", () => {
-    viewMode = viewMode === "large" ? "large" : "large";
-    document.getElementById("toggleViewBtn").innerText = viewMode === "large" ? "Switch to Grid View" : "Switch to Grid View";
+    viewMode = viewMode === "large" ? "grid" : "large";
+    document.getElementById("toggleViewBtn").innerText = viewMode === "large" ? "Switch to Grid View" : "Switch to List View";
     fetchFolder(currentPath);
   });
 
@@ -43,6 +45,15 @@
   document.getElementById("newFolderBtn").addEventListener("click", () => {
     let folderName = prompt("Enter new folder name:");
     if (folderName) createFolder(folderName);
+  });
+
+  document.getElementById("backButton").addEventListener("click", () => {
+    if (historyStack.length > 0) {
+      const previousPath = historyStack.pop();
+      fetchFolder(previousPath);
+    } else {
+      alert("No previous directory.");
+    }
   });
 
   async function getRootFolder() {
@@ -99,65 +110,79 @@
     document.getElementById("breadcrumbs").innerHTML = breadcrumbHTML;
   }
 
-  function fetchFolder(path) {
-    currentPath = path;
-    updateBreadcrumbs();
+  async function fetchFolder(path) {
+  if (currentPath) historyStack.push(currentPath);
+  currentPath = path;
+  updateBreadcrumbs();
 
-    fetch(`/api/list?path=${encodeURIComponent(path)}`)
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-              alert(data.error);
-              return;
-          }
-          displayItems(data.files);
-      })
-      .catch(err => {
-          console.error("Error fetching folder contents:", err);
-          alert("Could not load folder contents.");
-      });
-  }
+  fetch(`/api/list?path=${encodeURIComponent(path)}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      // Log the files data to see if isCritical is included
+      console.log(data.files); // Add this line for debugging
+
+      displayItems(data.files);
+    })
+    .catch(err => {
+      console.error("Error fetching folder contents:", err);
+      alert("Could not load folder contents.");
+    });
+}
+
 
   function displayItems(items) {
     const container = document.getElementById("fileContainer");
-
     container.innerHTML = "";
 
-    if (viewMode === "large") {
-      items.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("item", "large");
+    items.forEach(item => {
+  const div = document.createElement("div");
+  div.classList.add("item", viewMode);
 
-        let iconPath = item.isFolder ? "/static/icons/folder.png" : "/static/icons/file.png";
-        if (!item.isFolder) {
-          let ext = item.name.split(".").pop().toLowerCase();
-          let allowedIcons = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "html", "htm"];
-          if (allowedIcons.includes(ext)) {
-            iconPath = `/static/icons/${ext}.png`;
-          }
-        }
-
-        div.innerHTML = `<div class="actions">
-                            <button class="edit-btn" onclick="editItem('${item.path}')"><img src="/static/icons/edit.png" alt="edit" style="width: 12px; vertical-align: middle;"> Edit</button>
-                            <button class="delete-btn" onclick="deleteItem('${item.path}')">Delete</button>
-                         </div>
-                         <div class="icon"><img style="width:40px" src="${iconPath}" alt="icon"></div>
-                         <div class="filename">${item.name}</div>`;
-
-        div.addEventListener("click", () => {
-          if (item.isFolder) {
-            fetchFolder(item.path);
-          } else {
-            window.open(`/api/file?path=${encodeURIComponent(item.path)}`, "_blank");
-          }
-        });
-
-        container.appendChild(div);
-      });
-    }
+  let iconPath = item.isFolder ? "/static/icons/folder.png" : "/static/icons/file.png";
+  if (!item.isFolder) {
+      let ext = item.name.split(".").pop().toLowerCase();
+      let allowedIcons = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "html", "htm", "docx", 'conf', 'xml', 'json', 'dll'];
+      if (allowedIcons.includes(ext)) {
+          iconPath = `/static/icons/${ext}.png`;
+      }
   }
 
-  async function createFile(fileName) {
+  let fixedPath = item.path.replaceAll("\\", "/");
+
+  // Ensure the condition works as expected
+  let warningIcon = item.isCritical && userRole === "employee" ? `<span class="warning-icon">⚠️</span>` : "";
+
+  div.innerHTML = `
+    <div class="actions">
+      <button class="edit-btn" onclick="editItem('${fixedPath}')">
+          <img src="/static/icons/edit.png" alt="edit" style="width: 12px; vertical-align: middle;">
+      </button>
+      <button class="delete-btn" onclick="deleteItem('${fixedPath}')">
+          <img src="/static/icons/delete.png" alt="delete" style="width: 12px; vertical-align: middle;">
+      </button>
+    </div>
+    <div class="icon"><img style="width:40px" src="${iconPath}" alt="icon"></div>
+    <div class="filename">${warningIcon} ${item.name}</div>`;
+
+  div.addEventListener("click", () => {
+    if (item.isFolder) {
+      fetchFolder(fixedPath);
+    } else {
+      window.open(`/api/file?path=${encodeURIComponent(fixedPath)}`, "_blank");
+    }
+  });
+
+  container.appendChild(div);
+});
+
+  }
+
+async function createFile(fileName) {
     try {
       let response = await fetch("/api/create-file", {
         method: "POST",
@@ -171,9 +196,9 @@
       console.error("Error creating file:", error);
       alert("Could not create file.");
     }
-  }
+}
 
-  async function createFolder(folderName) {
+async function createFolder(folderName) {
     try {
       let response = await fetch("/api/create-folder", {
         method: "POST",
@@ -187,46 +212,55 @@
       console.error("Error creating folder:", error);
       alert("Could not create folder.");
     }
-  }
+}
 
-  async function editItem(path) {
+async function editItem(path) {
     let newName = prompt("Enter new name:");
-    if (newName) {
-      try {
+    if (!newName || newName.trim() === "") {
+        alert("Invalid file name.");
+        return;
+    }
+
+    let fixedPath = path.replaceAll("\\", "/");
+
+    try {
         let response = await fetch("/api/edit-item", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ path, newName })
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: fixedPath, newName: newName.trim() })
         });
+
         let data = await response.json();
         if (data.success) fetchFolder(currentPath);
-        else alert("Failed to rename item.");
-      } catch (error) {
+        else alert(data.error || "Failed to rename item.");
+    } catch (error) {
         console.error("Error renaming item:", error);
         alert("Could not rename item.");
-      }
     }
-  }
+}
 
-  async function deleteItem(path) {
-    if (confirm("Are you sure you want to delete this item?")) {
-      try {
+async function deleteItem(path) {
+    if (!confirm("Are you sure you want to delete this item?")) return;
+
+    let fixedPath = path.replaceAll("\\", "/");
+
+    try {
         let response = await fetch("/api/delete-item", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ path })
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: fixedPath })
         });
+
         let data = await response.json();
         if (data.success) fetchFolder(currentPath);
-        else alert("Failed to delete item.");
-      } catch (error) {
+        else alert(data.error || "Failed to delete item.");
+    } catch (error) {
         console.error("Error deleting item:", error);
         alert("Could not delete item.");
-      }
     }
-  }
+}
 
-  window.onload = getRootFolder;
+window.onload = getRootFolder;
 </script>
 
 {% endblock %}

@@ -12,13 +12,10 @@ class Note(db.Model):
 
 #represents table in database
 class User(db.Model, UserMixin):
-  #columns
-  #(type of column, set as primary key)
-  id = db.Column(db.Integer, primary_key=True)
-  #(type of column, status)
-  email = db.Column(db.String(500), unique=True)
-  password = db.Column(db.String(500)) 
-  firstName = db.Column(db.String(500))
-  role = db.Column(db.String(500))
-  notes = db.relationship('Note')
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(500), unique=True, nullable=False)
+    password = db.Column(db.String(500), nullable=False)
+    firstName = db.Column(db.String(500), nullable=False)
+    role = db.Column(db.String(50), nullable=False)  # 'admin' or 'employee'
+
   

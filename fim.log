@@ -1,101 +1,16 @@
-2025-03-26 21:18:32 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:18:40 | INFO | File created: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor\HELLO.TXT
-2025-03-26 21:19:06 | INFO | File created: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor\CustomData\ME.TXT
-2025-03-26 21:19:07 | INFO | File modified: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor\CustomData
-2025-03-26 21:24:04 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:24:29 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:25:58 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:25:58 | INFO | Baseline created successfully.
-2025-03-26 21:28:02 | WARNING | File deleted: CustomData\ME.TXT
-2025-03-26 21:28:02 | WARNING | File deleted: HELLO.TXT
-2025-03-26 21:28:02 | WARNING | File deleted: L.TXT
-2025-03-26 21:28:02 | WARNING | File deleted: CustomData\ME.TXT
-2025-03-26 21:28:02 | WARNING | File deleted: HELLO.TXT
-2025-03-26 21:28:02 | WARNING | File deleted: L.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: CustomData\ME.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: HELLO.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: L.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: CustomData\ME.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: HELLO.TXT
-2025-03-26 21:28:18 | WARNING | File deleted: L.TXT
-2025-03-26 21:48:32 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:48:37 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 21:50:48 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:50:48 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:50:48 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:51:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:51:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:51:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:51:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:52:19 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 21:52:19 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:52:19 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 21:52:19 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:52:19 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 21:52:19 | WARNING | File modified: HELLO.TXT
-2025-03-26 21:52:19 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 21:52:19 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:05 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 22:01:12 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:12 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:12 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:12 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:12 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:12 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:12 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:12 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:12 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:12 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:18 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:18 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:18 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:18 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:19 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:19 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:46 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:46 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:47 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:47 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:57 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:57 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:57 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:57 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:01:57 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:01:57 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:02:09 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:02:09 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:02:09 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:02:09 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:02:09 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:02:09 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:10:27 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 22:10:32 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 22:11:48 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 22:16:02 | WARNING | New file detected: file.txt
-2025-03-26 22:16:02 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:16:02 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:02 | WARNING | New file detected: file.txt
-2025-03-26 22:16:02 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: file.txt
-2025-03-26 22:16:20 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: file.txt
-2025-03-26 22:16:20 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:20 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: file.txt
-2025-03-26 22:16:20 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:16:20 | WARNING | New file detected: file.txt
-2025-03-26 22:16:20 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:16:20 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:19:18 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
-2025-03-26 22:21:54 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:21:54 | WARNING | New file detected: file.txt
-2025-03-26 22:21:54 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:21:54 | WARNING | File modified: CustomData\ME.TXT
-2025-03-26 22:21:54 | WARNING | New file detected: file.txt
-2025-03-26 22:21:54 | WARNING | New file detected: CustomData\JOHN.TXT
-2025-03-26 22:21:54 | WARNING | File modified: HELLO.TXT
-2025-03-26 22:21:54 | WARNING | File modified: CustomData\ME.TXT
-2025-03-26 22:34:40 | INFO | Starting FIM monitoring on: C:\Users\Rajaire Thomas\Desktop\computer security project\Monitor
+2025-03-28 16:41:32,737 | INFO | Starting FIM monitoring on: Monitor
+2025-03-28 16:41:32,864 | INFO | Baseline created successfully.
+2025-03-28 16:43:21,651 | WARNING | Critical file added: brick.dll
+2025-03-28 16:43:21,652 | WARNING | Critical file deleted: wall.dll
+2025-03-28 16:43:21,672 | WARNING | Critical file added: brick.dll
+2025-03-28 16:43:21,673 | WARNING | Critical file deleted: wall.dll
+2025-03-28 16:44:22,644 | WARNING | Critical file added: brick.dll
+2025-03-28 16:44:22,645 | WARNING | Critical file deleted: wall.dll
+2025-03-28 16:46:03,997 | INFO | Baseline created successfully.
+2025-03-28 16:46:03,998 | INFO | Admin modified critical file. Baseline updated: wall.dll
+2025-03-28 16:47:19,944 | INFO | Baseline created successfully.
+2025-03-28 16:47:19,968 | INFO | Admin modified critical file. Baseline updated: workers.json
+2025-03-28 16:49:12,913 | INFO | Starting FIM monitoring on: Monitor
+2025-03-28 16:51:00,980 | WARNING | Critical file modified: workers.json
+2025-03-28 16:51:01,167 | INFO | Baseline created successfully.
+2025-03-28 16:51:01,168 | INFO | Admin modified critical file. Baseline updated: workers.json
