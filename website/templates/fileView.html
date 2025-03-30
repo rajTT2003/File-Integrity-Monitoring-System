@@ -30,6 +30,10 @@
   let viewMode = "large"; 
   let historyStack = []; 
   var userRole = "{{ current_user.role }}";
+  // Assuming the Python backend passed the role as a variable to the template
+
+  // Store the role in localStorage
+  localStorage.setItem('role', userRole);
 
   document.getElementById("toggleViewBtn").addEventListener("click", () => {
     viewMode = viewMode === "large" ? "grid" : "large";
@@ -175,6 +179,22 @@
     } else {
       window.open(`/api/file?path=${encodeURIComponent(fixedPath)}`, "_blank");
     }
+    
+    if (item.isCritical && userRole === "employee") {
+          // Print a message to the console (terminal-like)
+          console.log(`Critical file clicked: ${item.name} at path ${fixedPath}`);
+          //call endpoint to send email
+          fetch('/send', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          })
+          .catch(error => {
+              responseMessage.textContent = "Error sending email.";
+              responseMessage.style.color = "red";
+          });
+        }
   });
 
   container.appendChild(div);

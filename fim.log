@@ -14,3 +14,6 @@
 2025-03-28 16:51:00,980 | WARNING | Critical file modified: workers.json
 2025-03-28 16:51:01,167 | INFO | Baseline created successfully.
 2025-03-28 16:51:01,168 | INFO | Admin modified critical file. Baseline updated: workers.json
+2025-03-29 15:13:00,658 | INFO | Starting FIM monitoring on: Monitor
+2025-03-29 17:05:21,545 | INFO | Starting FIM monitoring on: Monitor
+2025-03-29 21:31:56,156 | INFO | Starting FIM monitoring on: Monitor

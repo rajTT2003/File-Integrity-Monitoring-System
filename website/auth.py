@@ -7,6 +7,10 @@ from .decorators import role_required  # ✅ Import the decorator
 from flask_login import current_user
 from .fim_monitor import start_fim_monitor, MONITOR_DIR
 from threading import Thread
+from flask import Flask, render_template, request, jsonify
+from .send_email import send_email_outlook
+
+
 
 
 auth = Blueprint('auth', __name__)
@@ -50,6 +54,8 @@ def login():
 
             # Redirect correctly based on role
             if user.role == 'admin':
+                # Modify the global variable
+                # globals.role = 'admin'
                 return redirect(url_for('auth.admin_dashboard'))
             else:
                 return redirect(url_for('auth.employee_dashboard'))
@@ -105,3 +111,30 @@ def sign_up():
             return redirect(url_for('auth.login'))  # ✅ Redirect to login page after signup
 
     return render_template("sign_up.html", user=current_user)
+
+
+@auth.route('/admin/view-users')
+# @login_required
+# @role_required('admin')
+def view_users():
+    # Query all users from the database
+    users = User.query.all()
+
+    # Print all users' information (for debugging purposes)
+    for user in users:
+        print(f"ID: {user.id}, Email: {user.email}, First Name: {user.firstName}, Role: {user.role}")
+
+    #render a template with the users list, or redirect after printing
+    flash('Users have been printed to the console.', category='success')
+    return redirect(url_for('auth.admin_dashboard'))  #Redirect back to admin dashboard
+
+#endpoint to send email to admins
+@auth.route('/send', methods=['POST'])
+def send():
+    # Query all users from the database
+    users = User.query.all() 
+    
+    for user in users:
+      if user.role == "admin":
+        send_email_outlook(user.email)
+    return "", 204
