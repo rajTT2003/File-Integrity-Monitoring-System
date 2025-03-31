@@ -26,211 +26,188 @@
 </div>
 
 <script>
-  let currentPath = "";
-  let viewMode = "large"; 
-  let historyStack = []; 
-  var userRole = "{{ current_user.role }}";
-  // Assuming the Python backend passed the role as a variable to the template
+ let currentPath = "";
+let viewMode = "large";
+let historyStack = [];
 
-  // Store the role in localStorage
-  localStorage.setItem('role', userRole);
+var userRole = "{{ current_user.role }}";
+localStorage.setItem('role', userRole);
 
-  document.getElementById("toggleViewBtn").addEventListener("click", () => {
+document.getElementById("toggleViewBtn").addEventListener("click", () => {
     viewMode = viewMode === "large" ? "grid" : "large";
     document.getElementById("toggleViewBtn").innerText = viewMode === "large" ? "Switch to Grid View" : "Switch to List View";
-    fetchFolder(currentPath);
-  });
+    fetchFolder(currentPath, false);
+});
 
-  document.getElementById("newFileBtn").addEventListener("click", () => {
+document.getElementById("newFileBtn").addEventListener("click", () => {
     let fileName = prompt("Enter new file name:");
     if (fileName) createFile(fileName);
-  });
+});
 
-  document.getElementById("newFolderBtn").addEventListener("click", () => {
+document.getElementById("newFolderBtn").addEventListener("click", () => {
     let folderName = prompt("Enter new folder name:");
     if (folderName) createFolder(folderName);
-  });
+});
 
-  document.getElementById("backButton").addEventListener("click", () => {
+document.getElementById("backButton").addEventListener("click", () => {
     if (historyStack.length > 0) {
-      const previousPath = historyStack.pop();
-      fetchFolder(previousPath);
+        let previousPath = historyStack.pop();
+        fetchFolder(previousPath, true);
     } else {
-      alert("No previous directory.");
+        alert("No previous directory.");
     }
-  });
+});
 
-  async function getRootFolder() {
+async function getRootFolder() {
     try {
-      let response = await fetch("/api/root");
-      let data = await response.json();
-      currentPath = data.root || "/Monitor";
-      fetchFolder(currentPath);
-      fetchFolderTree();
+        let response = await fetch("/api/root");
+        let data = await response.json();
+        currentPath = data.root || "/Monitor";
+        fetchFolder(currentPath, false);
+        fetchFolderTree();
     } catch (error) {
-      console.error("Error fetching root folder:", error);
-      alert("Failed to load the root folder.");
+        console.error("Error fetching root folder:", error);
+        alert("Failed to load the root folder.");
     }
-  }
+}
 
-  async function fetchFolderTree() {
+async function fetchFolderTree() {
     try {
-      let response = await fetch("/api/tree");
-      let treeData = await response.json();
-      renderTree(treeData, document.getElementById("folderTree"));
+        let response = await fetch("/api/tree");
+        let treeData = await response.json();
+        renderTree(treeData, document.getElementById("folderTree"));
     } catch (error) {
-      console.error("Error fetching folder tree:", error);
+        console.error("Error fetching folder tree:", error);
     }
-  }
+}
 
-  function renderTree(data, parentElement) {
+function renderTree(data, parentElement) {
     let ul = document.createElement("ul");
 
     data.forEach(folder => {
-      let li = document.createElement("li");
-      li.innerHTML = `<span class="folder-label"><img style="width:20px" src="/static/icons/folder.png" alt="folder" class="folder-icon"> ${folder.name}</span>`;
+        let li = document.createElement("li");
+        li.innerHTML = `<span class="folder-label"><img style="width:20px" src="/static/icons/folder.png" alt="folder" class="folder-icon"> ${folder.name}</span>`;
       
-      li.addEventListener("click", (event) => {
-        event.stopPropagation();
-        fetchFolder(folder.path);
-      });
+        li.addEventListener("click", (event) => {
+            event.stopPropagation();
+            fetchFolder(folder.path, false);
+        });
 
-      if (folder.children && folder.children.length > 0) {
-        renderTree(folder.children, li);
-      }
+        if (folder.children && folder.children.length > 0) {
+            renderTree(folder.children, li);
+        }
 
-      ul.appendChild(li);
+        ul.appendChild(li);
     });
 
     parentElement.appendChild(ul);
-  }
-
-  function updateBreadcrumbs() {
-    let parts = currentPath.split("/").filter(p => p);
-    let breadcrumbHTML = parts.map((part, index) => {
-      let path = "/" + parts.slice(0, index + 1).join("/");
-      return `<a href="#" onclick="fetchFolder('${path}')">${part}</a>`;
-    }).join(" / ");
-    document.getElementById("breadcrumbs").innerHTML = breadcrumbHTML;
-  }
-
-  async function fetchFolder(path) {
-  if (currentPath) historyStack.push(currentPath);
-  currentPath = path;
-  updateBreadcrumbs();
-
-  fetch(`/api/list?path=${encodeURIComponent(path)}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.error) {
-        alert(data.error);
-        return;
-      }
-
-      // Log the files data to see if isCritical is included
-      console.log(data.files); // Add this line for debugging
-
-      displayItems(data.files);
-    })
-    .catch(err => {
-      console.error("Error fetching folder contents:", err);
-      alert("Could not load folder contents.");
-    });
 }
 
+function updateBreadcrumbs() {
+    let parts = currentPath.split("/").filter(p => p);
+    let breadcrumbHTML = parts.map((part, index) => {
+        let path = "/" + parts.slice(0, index + 1).join("/");
+        return `<a href="#" onclick="fetchFolder('${path}', false)">${part}</a>`;
+    }).join(" / ");
+    document.getElementById("breadcrumbs").innerHTML = breadcrumbHTML;
+}
 
-  function displayItems(items) {
+async function fetchFolder(path, isBackNavigation) {
+    if (!isBackNavigation && currentPath) {
+        historyStack.push(currentPath);
+    }
+
+    currentPath = path;
+    updateBreadcrumbs();
+
+    fetch(`/api/list?path=${encodeURIComponent(path)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            displayItems(data.files);
+        })
+        .catch(err => {
+            console.error("Error fetching folder contents:", err);
+            alert("Could not load folder contents.");
+        });
+}
+
+function displayItems(items) {
     const container = document.getElementById("fileContainer");
     container.innerHTML = "";
 
     items.forEach(item => {
-  const div = document.createElement("div");
-  div.classList.add("item", viewMode);
+        const div = document.createElement("div");
+        div.classList.add("item", viewMode);
 
-  let iconPath = item.isFolder ? "/static/icons/folder.png" : "/static/icons/file.png";
-  if (!item.isFolder) {
-      let ext = item.name.split(".").pop().toLowerCase();
-      let allowedIcons = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "html", "htm", "docx", 'conf', 'xml', 'json', 'dll'];
-      if (allowedIcons.includes(ext)) {
-          iconPath = `/static/icons/${ext}.png`;
-      }
-  }
-
-  let fixedPath = item.path.replaceAll("\\", "/");
-
-  // Ensure the condition works as expected
-  let warningIcon = item.isCritical && userRole === "employee" ? `<span class="warning-icon">⚠️</span>` : "";
-
-  div.innerHTML = `
-    <div class="actions">
-      <button class="edit-btn" onclick="editItem('${fixedPath}')">
-          <img src="/static/icons/edit.png" alt="edit" style="width: 12px; vertical-align: middle;">
-      </button>
-      <button class="delete-btn" onclick="deleteItem('${fixedPath}')">
-          <img src="/static/icons/delete.png" alt="delete" style="width: 12px; vertical-align: middle;">
-      </button>
-    </div>
-    <div class="icon"><img style="width:40px" src="${iconPath}" alt="icon"></div>
-    <div class="filename">${warningIcon} ${item.name}</div>`;
-
-  div.addEventListener("click", () => {
-    if (item.isFolder) {
-      fetchFolder(fixedPath);
-    } else {
-      window.open(`/api/file?path=${encodeURIComponent(fixedPath)}`, "_blank");
-    }
-    
-    if (item.isCritical && userRole === "employee") {
-          // Print a message to the console (terminal-like)
-          console.log(`Critical file clicked: ${item.name} at path ${fixedPath}`);
-          //call endpoint to send email
-          fetch('/send', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          })
-          .catch(error => {
-              responseMessage.textContent = "Error sending email.";
-              responseMessage.style.color = "red";
-          });
+        let iconPath = item.isFolder ? "/static/icons/folder.png" : "/static/icons/file.png";
+        if (!item.isFolder) {
+            let ext = item.name.split(".").pop().toLowerCase();
+            let allowedIcons = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "html", "htm", "docx", 'conf', 'xml', 'json', 'dll'];
+            if (allowedIcons.includes(ext)) {
+                iconPath = `/static/icons/${ext}.png`;
+            }
         }
-  });
 
-  container.appendChild(div);
-});
+        let fixedPath = item.path.replaceAll("\\", "/");
+        let warningIcon = item.isCritical && userRole === "employee" ? `<span class="warning-icon">⚠️</span>` : "";
 
-  }
+        div.innerHTML = `
+            <div class="actions">
+                <button class="edit-btn" onclick="editItem('${fixedPath}')">
+                    <img src="/static/icons/edit.png" alt="edit" style="width: 12px; vertical-align: middle;">
+                </button>
+                <button class="delete-btn" onclick="deleteItem('${fixedPath}')">
+                    <img src="/static/icons/delete.png" alt="delete" style="width: 12px; vertical-align: middle;">
+                </button>
+            </div>
+            <div class="icon"><img style="width:40px" src="${iconPath}" alt="icon"></div>
+            <div class="filename">${warningIcon} ${item.name}</div>`;
+
+        div.addEventListener("click", () => {
+            if (item.isFolder) {
+                fetchFolder(fixedPath, false);
+            } else {
+                window.open(`/api/file?path=${encodeURIComponent(fixedPath)}`, "_blank");
+            }
+        });
+
+        container.appendChild(div);
+    });
+}
 
 async function createFile(fileName) {
     try {
-      let response = await fetch("/api/create-file", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path: currentPath, name: fileName })
-      });
-      let data = await response.json();
-      if (data.success) fetchFolder(currentPath);
-      else alert("Failed to create file.");
+        let response = await fetch("/api/create-file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: currentPath, name: fileName })
+        });
+        let data = await response.json();
+        if (data.success) fetchFolder(currentPath, false);
+        else alert("Failed to create file.");
     } catch (error) {
-      console.error("Error creating file:", error);
-      alert("Could not create file.");
+        console.error("Error creating file:", error);
+        alert("Could not create file.");
     }
 }
 
 async function createFolder(folderName) {
     try {
-      let response = await fetch("/api/create-folder", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path: currentPath, name: folderName })
-      });
-      let data = await response.json();
-      if (data.success) fetchFolder(currentPath);
-      else alert("Failed to create folder.");
+        let response = await fetch("/api/create-folder", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: currentPath, name: folderName })
+        });
+        let data = await response.json();
+        if (data.success) fetchFolder(currentPath, false);
+        else alert("Failed to create folder.");
     } catch (error) {
-      console.error("Error creating folder:", error);
-      alert("Could not create folder.");
+        console.error("Error creating folder:", error);
+        alert("Could not create folder.");
     }
 }
 
@@ -251,7 +228,7 @@ async function editItem(path) {
         });
 
         let data = await response.json();
-        if (data.success) fetchFolder(currentPath);
+        if (data.success) fetchFolder(currentPath, false);
         else alert(data.error || "Failed to rename item.");
     } catch (error) {
         console.error("Error renaming item:", error);
@@ -272,7 +249,7 @@ async function deleteItem(path) {
         });
 
         let data = await response.json();
-        if (data.success) fetchFolder(currentPath);
+        if (data.success) fetchFolder(currentPath, false);
         else alert(data.error || "Failed to delete item.");
     } catch (error) {
         console.error("Error deleting item:", error);
@@ -281,6 +258,7 @@ async function deleteItem(path) {
 }
 
 window.onload = getRootFolder;
+
 </script>
 
 {% endblock %}

@@ -1,23 +1,24 @@
 /* General Styles */
 body {
-  background-color: #f8f9fa;
+  background-color: #121212; /* Dark background for the page */
   font-family: 'Arial', sans-serif;
+  color: #e0e0e0; /* Light text for contrast */
 }
 
 /* Center the login form */
 form {
   width: 350px;
-  background: #ffffff;
+  background: #1e1e1e; /* Dark background for the form */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow */
   margin: 50px auto;
   text-align: center;
 }
 
 /* Form Heading */
 h3 {
-  color: #343a40;
+  color: #ffcc00; /* Yellow color for heading */
   margin-bottom: 20px;
 }
 
@@ -29,20 +30,22 @@ h3 {
 
 label {
   font-weight: bold;
-  color: #495057;
+  color: #e0e0e0; /* Light color for label */
 }
 
 input[type="email"], input[type="password"] {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ced4da;
+  border: 1px solid #444; /* Dark border for inputs */
   border-radius: 5px;
+  background-color: #333; /* Dark input background */
+  color: #e0e0e0; /* Light text inside inputs */
   transition: 0.3s;
 }
 
 input[type="email"]:focus, input[type="password"]:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  border-color: #ffcc00; /* Yellow border when focused */
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.3); /* Soft yellow glow on focus */
   outline: none;
 }
 
@@ -53,11 +56,14 @@ button[type="submit"] {
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
+  background-color: #ffcc00; /* Yellow button */
+  color: #121212; /* Dark text on button */
   transition: 0.3s;
+  border: none;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #e6b800; /* Darker yellow on hover */
 }
 
 /* Responsive Design */

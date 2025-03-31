@@ -1,0 +1,193 @@
+/* Reset margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure the body takes full height */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+/* Dashboard Container */
+.emp-dashboard-container {
+    display: flex;
+}
+
+/* Sidebar - Fixed but avoids overlapping navbar */
+.emp-sidebar {
+    width: 250px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    height: calc(100vh - 60px); /* Adjust for navbar height */
+    position: fixed;
+    left: 0;
+    top: 60px; /* Move below navbar */
+    overflow-y: auto;
+}
+
+/* Sidebar Header */
+.emp-sidebar h2 {
+    color: #ffcc00;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Sidebar Navigation */
+.emp-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.emp-sidebar ul li {
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.emp-sidebar ul li i {
+    margin-right: 10px;
+}
+
+.emp-sidebar ul li:hover {
+    background-color: #ffcc00;
+    color: #121212;
+    transform: scale(1.05);
+}
+
+.emp-sidebar .emp-logout {
+    margin-top: 50px;
+    background-color: #ff0000;
+    color: white;
+}
+
+.emp-sidebar .emp-logout:hover {
+    background-color: #cc0000;
+}
+
+/* Adjust Main Content */
+.emp-main-content {
+    margin-left: 270px; /* Push content to the right */
+    padding: 20px;
+    width: calc(100% - 270px);
+    margin-top: 80px; /* Prevent navbar overlap */
+}
+
+/* Navbar Styling */
+.emp-navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.emp-navbar h1 {
+    color: #ffcc00;
+    font-size: 22px;
+}
+
+/* Overview Cards */
+.emp-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.emp-card {
+    flex: 1;
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.emp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+}
+
+.emp-card h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.emp-card p {
+    font-size: 22px;
+}
+
+/* Transactions Table */
+.emp-transactions-table {
+    margin-top: 40px;
+}
+
+.emp-transactions-table h2 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.emp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.emp-table th, .emp-table td {
+    padding: 12px;
+    border-bottom: 1px solid #444;
+    text-align: left;
+}
+
+.emp-table th {
+    background-color: #333;
+}
+
+.emp-table tr:hover {
+    background-color: #1e1e1e;
+}
+
+.emp-success {
+    color: #00ff00;
+}
+
+.emp-pending {
+    color: #ffcc00;
+}
+
+.emp-failed {
+    color: #ff0000;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .emp-sidebar {
+        width: 60px;
+    }
+
+    .emp-sidebar ul li {
+        text-align: center;
+    }
+
+    .emp-sidebar ul li i {
+        margin-right: 0;
+    }
+
+    .emp-main-content {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+    }
+}

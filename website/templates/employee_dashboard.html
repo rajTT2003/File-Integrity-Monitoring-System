@@ -1,7 +1,102 @@
-<!--Extend Base Template-->
 {% extends "base.html" %}
-{%  block title%} SafeBank - Home {% endblock %}
-<!-- Jinja template engine -->
-{%  block content %}
-<h1>Home Page</h1>
+{% block title %} SafeBank - Employee Dashboard {% endblock %}
+
+{% block content %}
+<div class="emp-dashboard-container">
+    
+    <!-- Sidebar -->
+    <div class="emp-sidebar">
+        <h2>SafeBank</h2>
+        <ul>
+            <li class="emp-active"><i class="fas fa-home"></i> Dashboard</li>
+            <li><i class="fas fa-wallet"></i> Accounts</li>
+            <li><i class="fas fa-exchange-alt"></i> Transactions</li>
+            <li><i class="fas fa-bell"></i> Notifications</li>
+            <li><i class="fas fa-cog"></i> Settings</li>
+            <li class="emp-logout"><i class="fas fa-sign-out-alt"></i> Logout</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="emp-main-content">
+        <h1>Welcome, Jon Doe</h1>
+
+        <!-- Overview Cards -->
+        <div class="emp-cards">
+            <div class="emp-card emp-balance">
+                <h3>Account Balance</h3>
+                <p>$32,875.75</p>
+            </div>
+            <div class="emp-card emp-transactions">
+                <h3>Recent Transactions</h3>
+                <p>+ $3,200 | - $850</p>
+            </div>
+            <div class="emp-card emp-alerts">
+                <h3>Alerts</h3>
+                <p>1 Fraud Warning, 3 New Notifications</p>
+            </div>
+        </div>
+
+        <!-- Recent Transactions Table -->
+        <div class="emp-transactions-table">
+            <h2>Recent Transactions</h2>
+            <table class="emp-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>March 31, 2025</td>
+                    <td>Salary Deposit</td>
+                    <td>+ $5,000.00</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+                <tr>
+                    <td>March 30, 2025</td>
+                    <td>Gym Membership</td>
+                    <td>- $50.00</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+                <tr>
+                    <td>March 29, 2025</td>
+                    <td>Electric Bill</td>
+                    <td>- $120.50</td>
+                    <td class="emp-pending">Pending</td>
+                </tr>
+                <tr>
+                    <td>March 28, 2025</td>
+                    <td>Online Purchase - Electronics</td>
+                    <td>- $500.00</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+                <tr>
+                    <td>March 27, 2025</td>
+                    <td>Restaurant Payment</td>
+                    <td>- $80.00</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+                <tr>
+                    <td>March 26, 2025</td>
+                    <td>Netflix Subscription</td>
+                    <td>- $15.99</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+                <tr>
+                    <td>March 25, 2025</td>
+                    <td>ATM Withdrawal</td>
+                    <td>- $300.00</td>
+                    <td class="emp-failed">Failed</td>
+                </tr>
+                <tr>
+                    <td>March 24, 2025</td>
+                    <td>Online Transfer to Savings</td>
+                    <td>- $2,000.00</td>
+                    <td class="emp-success">Completed</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

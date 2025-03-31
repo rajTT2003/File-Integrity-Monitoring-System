@@ -1,7 +1,190 @@
-<!--Extend Base Template-->
 {% extends "base.html" %}
-{%  block title%} SafeBank - Home {% endblock %}
-<!-- Jinja template engine -->
-{%  block content %}
-<h1>adminPage</h1>
+{% block title %} SafeBank - Admin Dashboard {% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<!-- Charts Section (Above Logs) -->
+<h2>File Integrity Monitoring Stats</h2>
+<div class="charts-container">
+    <div class="chart">
+        <h3>File Change Trend</h3>
+        <canvas id="line-chart"></canvas>
+    </div>
+    <div class="chart">
+        <h3>File Change Distribution</h3>
+        <canvas id="pie-chart"></canvas>
+    </div>
+</div>
+
+<!-- Live Logs -->
+<h2>Live Logs</h2>
+<div class="logs-container">
+    <div class="table-wrapper">
+        <table id="logs-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Level</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="log-tbody">
+                <!-- Logs will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let latestLogTimestamp = ""; // Track last log to prevent duplicates
+let fileActions = { created: 0, deleted: 0, moved: 0, unauthorized: 0 };
+
+// Fetch logs and process them
+function fetchLogs() {
+    fetch('/logs')
+        .then(response => response.text())
+        .then(data => {
+            const logTbody = document.getElementById('log-tbody');
+            const logs = data.trim().split("\n");
+
+            let newLogs = [];
+
+            logs.forEach((line) => {
+                const logParts = line.split(' | ');
+
+                if (logParts.length >= 3) {
+                    let logEntry = {
+                        timestamp: logParts[0],
+                        level: logParts[1],
+                        message: logParts.slice(2).join(' | ') // Handle messages with pipes
+                    };
+
+                    // Add only new logs
+                    if (logEntry.timestamp > latestLogTimestamp) {
+                        newLogs.push(logEntry);
+                    }
+                }
+            });
+
+            if (newLogs.length > 0) {
+                latestLogTimestamp = newLogs[newLogs.length - 1].timestamp; // Update last log timestamp
+                updateLogTable(newLogs);
+            }
+        });
+}
+
+// Update log table dynamically
+function updateLogTable(newLogs) {
+    const logTbody = document.getElementById('log-tbody');
+
+    newLogs.forEach((log) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${log.timestamp}</td>
+            <td>${log.level}</td>
+            <td>${log.message}</td>
+        `;
+        logTbody.prepend(row); // Add new logs to the top
+
+        // Update statistics
+        updateFileActionStats(log);
+    });
+
+    // Keep only the last 100 logs (prevent table from growing indefinitely)
+    while (logTbody.rows.length > 100) {
+        logTbody.deleteRow(-1);
+    }
+}
+
+// Update statistics based on log action
+function updateFileActionStats(log) {
+    if (log.message.includes('created')) fileActions.created++;
+    if (log.message.includes('deleted')) fileActions.deleted++;
+    if (log.message.includes('moved')) fileActions.moved++;
+    if (log.message.includes('Unauthorized')) fileActions.unauthorized++;
+
+    updateCharts();
+}
+
+// Update the charts
+function updateCharts() {
+    // Update line chart
+    lineChartData.labels.push(new Date().toLocaleTimeString());
+    lineChartData.datasets[0].data.push(fileActions.created + fileActions.deleted + fileActions.moved);
+
+    // Keep only the last 10 data points
+    if (lineChartData.labels.length > 10) {
+        lineChartData.labels.shift();
+        lineChartData.datasets[0].data.shift();
+    }
+
+    // Update pie chart
+    pieChartData.datasets[0].data = [fileActions.created, fileActions.deleted, fileActions.moved];
+
+    pieChart.update();
+    lineChart.update();
+}
+
+// Fetch logs every 3 seconds
+setInterval(fetchLogs, 3000);
+fetchLogs();
+
+// Data for charts
+const lineChartData = {
+    labels: [],
+    datasets: [{
+        label: 'File Changes Over Time',
+        data: [],
+        borderColor: '#4caf50',
+        fill: false,
+        tension: 0.1
+    }]
+};
+
+const pieChartData = {
+    labels: ['Created', 'Deleted', 'Moved'],
+    datasets: [{
+        label: 'File Changes Distribution',
+        data: [0, 0, 0],
+        backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
+    }]
+};
+
+// Line Chart
+const ctxLine = document.getElementById('line-chart').getContext('2d');
+const lineChart = new Chart(ctxLine, {
+    type: 'line',
+    data: lineChartData,
+    options: {
+        responsive: true,
+        scales: {
+            x: { title: { display: true, text: 'Time' } },
+            y: { title: { display: true, text: 'File Changes' } }
+        }
+    }
+});
+
+// Pie Chart
+const ctxPie = document.getElementById('pie-chart').getContext('2d');
+const pieChart = new Chart(ctxPie, {
+    type: 'pie',
+    data: pieChartData,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + ' changes';
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
 {% endblock %}

@@ -1,19 +1,88 @@
-2025-03-28 16:41:32,737 | INFO | Starting FIM monitoring on: Monitor
-2025-03-28 16:41:32,864 | INFO | Baseline created successfully.
-2025-03-28 16:43:21,651 | WARNING | Critical file added: brick.dll
-2025-03-28 16:43:21,652 | WARNING | Critical file deleted: wall.dll
-2025-03-28 16:43:21,672 | WARNING | Critical file added: brick.dll
-2025-03-28 16:43:21,673 | WARNING | Critical file deleted: wall.dll
-2025-03-28 16:44:22,644 | WARNING | Critical file added: brick.dll
-2025-03-28 16:44:22,645 | WARNING | Critical file deleted: wall.dll
-2025-03-28 16:46:03,997 | INFO | Baseline created successfully.
-2025-03-28 16:46:03,998 | INFO | Admin modified critical file. Baseline updated: wall.dll
-2025-03-28 16:47:19,944 | INFO | Baseline created successfully.
-2025-03-28 16:47:19,968 | INFO | Admin modified critical file. Baseline updated: workers.json
-2025-03-28 16:49:12,913 | INFO | Starting FIM monitoring on: Monitor
-2025-03-28 16:51:00,980 | WARNING | Critical file modified: workers.json
-2025-03-28 16:51:01,167 | INFO | Baseline created successfully.
-2025-03-28 16:51:01,168 | INFO | Admin modified critical file. Baseline updated: workers.json
-2025-03-29 15:13:00,658 | INFO | Starting FIM monitoring on: Monitor
-2025-03-29 17:05:21,545 | INFO | Starting FIM monitoring on: Monitor
-2025-03-29 21:31:56,156 | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 11:26:11,226 | INFO | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 11:26:11,229 | WARNING | WARNING | File is empty: Monitor\me.conf
+2025-03-31 11:26:11,229 | WARNING | Skipping file with invalid hash: Monitor\me.conf
+2025-03-31 11:26:11,230 | WARNING | WARNING | File is empty: Monitor\mikey.json
+2025-03-31 11:26:11,230 | WARNING | Skipping file with invalid hash: Monitor\mikey.json
+2025-03-31 11:26:11,231 | WARNING | WARNING | File is empty: Monitor\miles.json
+2025-03-31 11:26:11,231 | WARNING | Skipping file with invalid hash: Monitor\miles.json
+2025-03-31 11:26:11,232 | WARNING | WARNING | File is empty: Monitor\myHeaven.json
+2025-03-31 11:26:11,232 | WARNING | Skipping file with invalid hash: Monitor\myHeaven.json
+2025-03-31 11:26:11,253 | WARNING | WARNING | File is empty: Monitor\new.json
+2025-03-31 11:26:11,253 | WARNING | Skipping file with invalid hash: Monitor\new.json
+2025-03-31 11:26:11,254 | WARNING | WARNING | File is empty: Monitor\Nola.xml
+2025-03-31 11:26:11,254 | WARNING | Skipping file with invalid hash: Monitor\Nola.xml
+2025-03-31 11:26:11,254 | WARNING | WARNING | File is empty: Monitor\nord.xml
+2025-03-31 11:26:11,255 | WARNING | Skipping file with invalid hash: Monitor\nord.xml
+2025-03-31 11:26:11,255 | WARNING | WARNING | File is empty: Monitor\text.xml
+2025-03-31 11:26:11,256 | WARNING | Skipping file with invalid hash: Monitor\text.xml
+2025-03-31 11:26:11,257 | WARNING | WARNING | File is empty: Monitor\virus.xml
+2025-03-31 11:26:11,257 | WARNING | Skipping file with invalid hash: Monitor\virus.xml
+2025-03-31 11:26:11,257 | WARNING | WARNING | File is empty: Monitor\worm.conf
+2025-03-31 11:26:11,258 | WARNING | Skipping file with invalid hash: Monitor\worm.conf
+2025-03-31 11:26:11,258 | WARNING | WARNING | File is empty: Monitor\CustomerInfo\kim.json
+2025-03-31 11:26:11,259 | WARNING | Skipping file with invalid hash: Monitor\CustomerInfo\kim.json
+2025-03-31 11:26:11,261 | INFO | INFO | Baseline created successfully.
+2025-03-31 11:30:06,860 | INFO | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 11:30:06,899 | WARNING | WARNING | File is empty: Monitor\miles.json
+2025-03-31 11:30:06,900 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\miles.json
+2025-03-31 11:30:06,920 | WARNING | WARNING | File is empty: Monitor\Nola.xml
+2025-03-31 11:30:06,921 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\Nola.xml
+2025-03-31 11:30:06,943 | WARNING | WARNING | File is empty: Monitor\text.xml
+2025-03-31 11:30:06,943 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\text.xml
+2025-03-31 11:30:06,944 | WARNING | WARNING | File is empty: Monitor\virus.xml
+2025-03-31 11:30:06,944 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\virus.xml
+2025-03-31 11:30:06,944 | WARNING | WARNING | File is empty: Monitor\worm.conf
+2025-03-31 11:30:06,945 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\worm.conf
+2025-03-31 11:30:06,946 | WARNING | WARNING | File is empty: Monitor\CustomerInfo\kim.json
+2025-03-31 11:30:06,946 | WARNING | WARNING | Empty file detected, using placeholder hash for: Monitor\CustomerInfo\kim.json
+2025-03-31 11:30:06,948 | INFO | INFO | Baseline created successfully.
+2025-03-31 11:30:59,202 | INFO | 2025-03-31 11:30:59 | INFO | Rajaire (admin) triggered moved on myHeaven.json
+2025-03-31 11:30:59,203 | INFO | 2025-03-31 11:30:59 | INFO | Rajaire (admin) triggered modified on Heaven.json
+2025-03-31 11:30:59,204 | INFO | 2025-03-31 11:30:59 | INFO | Critical file modified: Heaven.json
+2025-03-31 11:32:16,052 | INFO | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 11:32:27,835 | INFO | 2025-03-31 11:32:27 | INFO | Tajay (employee) triggered moved on Heaven.json
+2025-03-31 11:32:27,836 | WARNING | 2025-03-31 11:32:27 | WARNING | Unauthorized critical file moved by Tajay: Heaven.json
+2025-03-31 11:33:15,316 | INFO | 2025-03-31 11:33:15 | INFO | Tajay (employee) triggered deleted on mikey.json
+2025-03-31 11:33:15,318 | INFO | 2025-03-31 11:33:15 | INFO | Critical file deleted: mikey.json
+2025-03-31 11:33:15,318 | WARNING | 2025-03-31 11:33:15 | WARNING | Unauthorized critical file deleted by Tajay: mikey.json
+2025-03-31 11:33:16,843 | INFO | Email sent successfully to rajairethomas10@gmail.com
+2025-03-31 11:33:46,582 | INFO | 2025-03-31 11:33:46 | INFO | Tajay (employee) triggered deleted on miles.json
+2025-03-31 11:33:46,582 | INFO | 2025-03-31 11:33:46 | INFO | Critical file deleted: miles.json
+2025-03-31 11:33:46,583 | WARNING | 2025-03-31 11:33:46 | WARNING | Unauthorized critical file deleted by Tajay: miles.json
+2025-03-31 11:33:47,770 | INFO | Email sent successfully to rajairethomas10@gmail.com
+2025-03-31 11:37:13,391 | INFO | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 11:37:13,421 | INFO | INFO | Backup created for: Monitor\new.json
+2025-03-31 11:37:13,426 | INFO | INFO | Backup created for: Monitor\Nola.xml
+2025-03-31 11:37:13,430 | INFO | INFO | Backup created for: Monitor\nord.xml
+2025-03-31 11:37:13,432 | INFO | INFO | Backup created for: Monitor\text.xml
+2025-03-31 11:37:13,435 | INFO | INFO | Backup created for: Monitor\virus.xml
+2025-03-31 11:37:13,437 | INFO | INFO | Backup created for: Monitor\worm.conf
+2025-03-31 11:37:13,442 | INFO | INFO | Backup created for: Monitor\CustomerInfo\kim.json
+2025-03-31 11:40:37,615 | INFO | 2025-03-31 11:40:37 | INFO | Rajaire (admin) triggered created on Jack.json
+2025-03-31 11:40:37,617 | INFO | 2025-03-31 11:40:37 | INFO | Critical file added: Jack.json
+2025-03-31 11:40:55,784 | INFO | 2025-03-31 11:40:55 | INFO | Rajaire (admin) triggered created on meta.json
+2025-03-31 11:40:55,785 | INFO | 2025-03-31 11:40:55 | INFO | Critical file added: meta.json
+2025-03-31 12:33:33,157 | INFO | 2025-03-31 12:33:33 | INFO | Rajaire (admin) triggered created on kim.xml
+2025-03-31 12:33:33,158 | INFO | 2025-03-31 12:33:33 | INFO | Critical file added: kim.xml
+2025-03-31 12:45:08,986 | INFO | 2025-03-31 12:45:08 | INFO | Rajaire (admin) triggered moved on eStatements.pdf
+2025-03-31 12:54:40,665 | INFO | INFO | Starting FIM monitoring on: Monitor
+2025-03-31 12:54:40,671 | INFO | INFO | Backup created for: Monitor\Jack.json
+2025-03-31 12:54:40,673 | INFO | INFO | Backup created for: Monitor\kim.xml
+2025-03-31 12:54:40,682 | INFO | INFO | Backup created for: Monitor\meta.json
+2025-03-31 12:54:40,687 | INFO | INFO | Backup created for: Monitor\new.json
+2025-03-31 12:54:40,689 | INFO | INFO | Backup created for: Monitor\Nola.xml
+2025-03-31 12:54:40,692 | INFO | INFO | Backup created for: Monitor\nord.xml
+2025-03-31 12:54:40,695 | INFO | INFO | Backup created for: Monitor\text.xml
+2025-03-31 12:54:40,696 | INFO | INFO | Backup created for: Monitor\virus.xml
+2025-03-31 12:54:40,699 | INFO | INFO | Backup created for: Monitor\worm.conf
+2025-03-31 12:54:40,710 | INFO | INFO | Backup created for: Monitor\CustomerInfo\kim.json
+2025-03-31 12:54:46,214 | INFO | 2025-03-31 12:54:46 | INFO | Tajay (employee) triggered deleted on Jack.json
+2025-03-31 12:54:46,215 | INFO | 2025-03-31 12:54:46 | INFO | Critical file deleted: Jack.json
+2025-03-31 12:54:46,216 | WARNING | 2025-03-31 12:54:46 | WARNING | Unauthorized critical file deleted by Tajay: Jack.json
+2025-03-31 12:55:05,321 | INFO | 2025-03-31 12:55:05 | INFO | Tajay (employee) triggered deleted on kim.xml
+2025-03-31 12:55:05,321 | INFO | 2025-03-31 12:55:05 | INFO | Critical file deleted: kim.xml
+2025-03-31 12:55:05,322 | WARNING | 2025-03-31 12:55:05 | WARNING | Unauthorized critical file deleted by Tajay: kim.xml
+2025-03-31 12:55:06,704 | INFO | Email sent successfully to rajairethomas10@gmail.com
+2025-03-31 12:55:49,866 | INFO | 2025-03-31 12:55:49 | INFO | Tajay (employee) triggered moved on Nola.xml
+2025-03-31 12:55:49,867 | WARNING | 2025-03-31 12:55:49 | WARNING | Unauthorized critical file moved by Tajay: Nola.xml
+2025-03-31 12:55:51,121 | INFO | Email sent successfully to rajairethomas10@gmail.com

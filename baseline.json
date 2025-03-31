@@ -1,6 +1,13 @@
 {
-    "sys.conf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "transactions.xml": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "wall.dll": "82b148989392603833bd18507fd84cb3103980901b7781443bd22be8a43e82b6",
-    "workers.json": "e08ecebcb86306bde46be51395588c2e98fdb44c3b683f3c9d7cbfb8c73514ca"
+    "me.conf": "fdb3d54607e675520afe07e0bc24fdc79ee4fee60cd905ab9176f6683934b907",
+    "mikey.json": "cc30ee5e029bd367df68c794edf27e05c18a33215717e37784689a1b06307595",
+    "miles.json": "EMPTY_FILE_HASH",
+    "myHeaven.json": "818efe46a6c2ddb95df1bdecd7869fbd6ac790f24182f681cc6b7edf43ec7b69",
+    "new.json": "9fabedfc0437c479b3871e7f0ab13f2723cfd18d5201c3117842e4a3d3afd7cc",
+    "Nola.xml": "EMPTY_FILE_HASH",
+    "nord.xml": "4b1aea0e721726fdb21256bd15b79478a6df28552ab26160063daea6772954ac",
+    "text.xml": "EMPTY_FILE_HASH",
+    "virus.xml": "EMPTY_FILE_HASH",
+    "worm.conf": "EMPTY_FILE_HASH",
+    "CustomerInfo\\kim.json": "EMPTY_FILE_HASH"
 }

@@ -12,12 +12,13 @@
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          crossorigin="anonymous"/>
-
+          crossorigin="
+anonymous"/>
     <!-- Link to Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fileView.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='AdminDash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='EmpDash.css') }}">
     <title>{% block title %}Home{% endblock %}</title>
 </head>
 <body>
@@ -33,6 +34,10 @@
                     {% if user.role == "admin" %}
                         <a class="nav-item nav-link" id="adminDashboard" href="/admin-dashboard">Admin Dashboard</a>
                         <a class="nav-item nav-link" id="manageUsers" href="/manage-users">Manage Users</a>
+                    {% endif %}
+                    {% if user.role == "employee" %}
+                        <a class="nav-item nav-link" id="adminDashboard" href="/employee-dashboard">Employee Dashboard</a>
+                        
                     {% endif %}
                     <a class="nav-item nav-link" id="fileView" href="/fileView">View Files</a>
                     <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>

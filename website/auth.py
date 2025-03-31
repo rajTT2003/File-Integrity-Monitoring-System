@@ -8,9 +8,12 @@ from flask_login import current_user
 from .fim_monitor import start_fim_monitor, MONITOR_DIR
 from threading import Thread
 from flask import Flask, render_template, request, jsonify
-from .send_email import send_email_outlook
+# In auth.py
+from flask import request
+import threading
 
-
+    # Query all users from the database and send email to admins
+from website.models import User
 
 
 auth = Blueprint('auth', __name__)
@@ -28,7 +31,6 @@ def employee_dashboard():
     return render_template("employee_dashboard.html")
 
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -41,21 +43,14 @@ def login():
             login_user(user, remember=True)
             flash(f'Welcome {user.firstName}!', category='success')
 
-            # Start FIM monitoring in a separate thread
-            def start_monitoring():
-                if user.role == 'admin':
-                    start_fim_monitor(MONITOR_DIR, 'admin')
-                else:
-                    start_fim_monitor(MONITOR_DIR, 'employee')
+            # Initialize FIM monitoring if not already running
+            if not hasattr(current_user, '_fim_thread') or not current_user._fim_thread.is_alive():
+                fim_thread = threading.Thread(target=start_fim_monitor, args=(MONITOR_DIR, current_user.role, current_user.firstName), daemon=True)
+                fim_thread.start()
+                current_user._fim_thread = fim_thread
 
-            # Start monitoring in a separate thread
-            thread = Thread(target=start_monitoring)
-            thread.start()
-
-            # Redirect correctly based on role
+            # Redirect based on role
             if user.role == 'admin':
-                # Modify the global variable
-                # globals.role = 'admin'
                 return redirect(url_for('auth.admin_dashboard'))
             else:
                 return redirect(url_for('auth.employee_dashboard'))
@@ -68,8 +63,12 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+    if hasattr(current_user, '_fim_thread') and current_user._fim_thread.is_alive():
+        # Stop the FIM thread if it's alive
+        current_user._fim_thread.join()
     logout_user()
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/sign-up', methods=['POST', 'GET'])
 def sign_up():
@@ -128,13 +127,4 @@ def view_users():
     flash('Users have been printed to the console.', category='success')
     return redirect(url_for('auth.admin_dashboard'))  #Redirect back to admin dashboard
 
-#endpoint to send email to admins
-@auth.route('/send', methods=['POST'])
-def send():
-    # Query all users from the database
-    users = User.query.all() 
-    
-    for user in users:
-      if user.role == "admin":
-        send_email_outlook(user.email)
-    return "", 204
+
